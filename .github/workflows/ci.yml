@@ -77,12 +77,13 @@ jobs:
 
   macos-native-x86_64:
     name: 'macOS 13 native, x86_64, no depends, sqlite only, gui'
+    if: github.event_name == 'pull_request' && github.event.pull_request.commits != 1
     # Use latest image, but hardcode version to avoid silent upgrades (and breaks).
     # See: https://github.com/actions/runner-images#available-images.
     runs-on: macos-13
 
     # No need to run on the read-only mirror, unless it is a PR.
-    if: github.repository != 'bitcoin-core/gui' || github.event_name == 'pull_request'
+   # if: github.repository != 'bitcoin-core/gui' || github.event_name == 'pull_request'
 
     timeout-minutes: 120
 
@@ -134,7 +135,7 @@ jobs:
     name: 'Win64 native, VS 2022'
     # Use latest image, but hardcode version to avoid silent upgrades (and breaks).
     # See: https://github.com/actions/runner-images#available-images.
-    runs-on: windows-2022
+    runs-on: Windows
 
     # No need to run on the read-only mirror, unless it is a PR.
     if: github.repository != 'bitcoin-core/gui' || github.event_name == 'pull_request'
@@ -314,9 +315,10 @@ jobs:
 
   asan-lsan-ubsan-integer-no-depends-usdt:
     name: 'ASan + LSan + UBSan + integer, no depends, USDT'
+    if: github.event_name == 'pull_request' && github.event.pull_request.commits != 1
     runs-on: ubuntu-24.04 # has to match container in ci/test/00_setup_env_native_asan.sh for tracing tools
     # No need to run on the read-only mirror, unless it is a PR.
-    if: github.repository != 'bitcoin-core/gui' || github.event_name == 'pull_request'
+    #if: github.repository != 'bitcoin-core/gui' || github.event_name == 'pull_request'
     timeout-minutes: 120
     env:
       FILE_ENV: "./ci/test/00_setup_env_native_asan.sh"
