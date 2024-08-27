@@ -135,7 +135,7 @@ jobs:
     name: 'Win64 native, VS 2022'
     # Use latest image, but hardcode version to avoid silent upgrades (and breaks).
     # See: https://github.com/actions/runner-images#available-images.
-    runs-on: Windows
+    runs-on: windows-2022
 
     # No need to run on the read-only mirror, unless it is a PR.
     #if: github.repository != 'bitcoin-core/gui' || github.event_name == 'pull_request'
